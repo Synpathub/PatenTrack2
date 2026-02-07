@@ -5,11 +5,12 @@ import jwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import websocket from '@fastify/websocket';
-import { getConfig, createLogger } from '@patentrack/shared';
+import { loadConfig, createLogger } from '@patentrack/shared';
 import { getDb } from '@patentrack/db';
 import { sql } from 'drizzle-orm';
 
-const config = getConfig();
+// Load configuration
+const config = loadConfig();
 const logger = createLogger('api');
 import errorHandler from './plugins/error-handler.js';
 import auth from './plugins/auth.js';
