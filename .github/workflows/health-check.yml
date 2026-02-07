@@ -1,0 +1,35 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run health check
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /opt/patentrack
+            ./infrastructure/scripts/health-check.sh
+
+      - name: Create health check issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '[ALERT] Health check failed — ' + new Date().toISOString(),
+              body: `## Health Check Failure\n\n**Date:** ${new Date().toISOString()}\n\nScheduled health check has failed. Please investigate the system status.`,
+              labels: ['production-alert', 'warning']
+            });
