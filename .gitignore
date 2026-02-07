@@ -8,3 +8,6 @@ build/
 .next/
 coverage/
 .DS_Store
+
+# TypeScript build info
+*.tsbuildinfo
