@@ -43,9 +43,8 @@ export class ConflictError extends AppError {
   }
 }
 
-export class TenantIsolationError extends ForbiddenError {
+export class TenantIsolationError extends AppError {
   constructor() {
-    super('Access denied: tenant isolation violation');
-    this.code = 'TENANT_ISOLATION_VIOLATION';
+    super(403, 'TENANT_ISOLATION_VIOLATION', 'Access denied: tenant isolation violation');
   }
 }
