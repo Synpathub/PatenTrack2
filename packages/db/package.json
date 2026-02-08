@@ -1,0 +1,36 @@
+{
+  "name": "@patentrack/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "migrate": "drizzle-kit push:pg",
+    "generate": "drizzle-kit generate:pg",
+    "studio": "drizzle-kit studio",
+    "seed": "tsx src/seeds/index.ts"
+  },
+  "dependencies": {
+    "@patentrack/core": "workspace:*",
+    "@patentrack/shared": "workspace:*",
+    "drizzle-orm": "^0.29.3",
+    "pg": "^8.11.3",
+    "bcrypt": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@types/pg": "^8.11.0",
+    "@types/bcrypt": "^5.0.2",
+    "drizzle-kit": "^0.20.14",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  }
+}
